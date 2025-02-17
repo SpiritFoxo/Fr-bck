@@ -1,12 +1,12 @@
 @use 'color';
-$font-stack: Arial, sans-serif;
+@use 'variables';
 
 body {
-    font-family: $font-stack;
+    font-family: variables.$font-stack;
 }
 
 .btn-custom {
-    background-color: $primary-color;
+    background-color: color.$primary-color;
     color: white;
     padding: 10px 20px;
     border: none;
@@ -15,6 +15,6 @@ body {
     transition: background-color 0.3s;
 
     &:hover {
-        background-color: $hover-color;
+        background-color: color.$hover-color;
     }
 }
