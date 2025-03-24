@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Профиль</title>
+    <script>
+        async function loadProfile() {
+            const token = localStorage.getItem("token");
+            const response = await fetch("http://localhost:8080/auth/profile", {
+                headers: { "Authorization": `Bearer ${token}` }
+            });
+            const result = await response.json();
+            document.getElementById("username").innerText = result.username;
+        }
+
+        async function updateProfile() {
+            const token = localStorage.getItem("token");
+            const newUsername = document.getElementById("newUsername").value;
+            const response = await fetch("http://localhost:8080/auth/update-profile", {
+                method: "PATCH",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${token}`
+                },
+                body: JSON.stringify({ username: newUsername })
+            });
+            const result = await response.json();
+            alert(result.message || "Профиль обновлен");
+            loadProfile();
+        }
+    </script>
+</head>
+<body onload="loadProfile()">
+    <h2>Профиль</h2>
+    <p>Имя пользователя: <span id="username"></span></p>
+    <input type="text" id="newUsername" placeholder="Новое имя"><br>
+    <button onclick="updateProfile()">Обновить</button>
+</body>
+</html>

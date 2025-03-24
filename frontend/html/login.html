@@ -1,0 +1,30 @@
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Логин</title>
+    <script>
+        async function login() {
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const response = await fetch("http://localhost:8080/api/login", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ username, password })
+            });
+            const result = await response.json();
+            if (result.token) {
+                localStorage.setItem("token", result.token);
+                window.location.href = "profile.html";
+            } else {
+                alert("Ошибка авторизации");
+            }
+        }
+    </script>
+</head>
+<body>
+    <h2>Вход</h2>
+    <input type="text" id="username" placeholder="Логин"><br>
+    <input type="password" id="password" placeholder="Пароль"><br>
+    <button onclick="login()">Войти</button>
+</body>
+</html>
